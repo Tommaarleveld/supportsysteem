@@ -11,9 +11,9 @@
 |
 */
 
+// Route to pages
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
-// Route::get('/about', function () {
-//     return view('pages.about');
-// });
+// Route to resources
+Route::resource('tickets', 'TicketsController');
