@@ -15,7 +15,7 @@ class TicketsController extends Controller
     public function index()
     {
         //Get all the tickets
-        $tickets = Ticket::orderBy('created_at', 'asc')->paginate(1);
+        $tickets = Ticket::orderBy('created_at', 'asc')->paginate(5);
 
         //Return the tickets alongside the view
         return view ('tickets.index')->with('tickets', $tickets);
@@ -28,7 +28,7 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        //
+        return view('tickets.create');
     }
 
     /**
@@ -39,7 +39,22 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validate the fields
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'level' => 'required'
+        ]);
+
+        //Create a ticket
+        $ticket = new Ticket;
+        $ticket->title = $request->input('title');
+        $ticket->body = $request->input('body');
+        $ticket->level = $request->input('level');
+        $ticket->save();
+
+        return redirect('/tickets')->with('success', 'Ticket succesvol aangemaakt');
+
     }
 
     /**

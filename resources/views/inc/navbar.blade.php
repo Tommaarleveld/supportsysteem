@@ -16,5 +16,10 @@
                 <a class="nav-link" href="/tickets">Tickets</a>
             </li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="/tickets/create">Maak een ticket aan</a>
+              </li>
+          </ul>
         </div>
 </nav>
