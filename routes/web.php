@@ -17,3 +17,6 @@ Route::get('/about', 'PagesController@about');
 
 // Route to resources
 Route::resource('tickets', 'TicketsController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
