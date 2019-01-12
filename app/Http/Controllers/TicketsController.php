@@ -80,7 +80,9 @@ class TicketsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ticket = Ticket::find($id);
+
+        return view('tickets.edit')->with('ticket', $ticket);
     }
 
     /**
@@ -92,7 +94,21 @@ class TicketsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Validate the fields
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'level' => 'required'
+        ]);
+
+        //Create a ticket
+        $ticket = Ticket::find($id);
+        $ticket->title = $request->input('title');
+        $ticket->body = $request->input('body');
+        $ticket->level = $request->input('level');
+        $ticket->save();
+
+        return redirect('/tickets')->with('success', 'Ticket succesvol aangepast');
     }
 
     /**
@@ -103,6 +119,9 @@ class TicketsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ticket = ticket::find($id);
+        $ticket->delete();
+
+        return redirect('/tickets')->with('success', 'Ticket succesvol verwijderd');
     }
 }
