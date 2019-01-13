@@ -19,4 +19,4 @@ Route::get('/about', 'PagesController@about');
 Route::resource('tickets', 'TicketsController');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'DashboardController@index');

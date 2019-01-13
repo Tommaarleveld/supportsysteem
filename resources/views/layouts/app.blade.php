@@ -27,5 +27,11 @@
             @yield('content')
         </div>
     </div>
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script>
+    window.onload = function () {
+        try{CKEDITOR.replace('article-ckeditor')}catch{};
+    }
+    </script>
 </body>
 </html>
