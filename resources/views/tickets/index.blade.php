@@ -14,12 +14,6 @@
                                 <h5 class="card-title"><a href="/tickets/{{$ticket->id}}">{{$ticket->title}}</a></h5>
                             </div>
                             <div class="col-md-3">
-                                {{-- {!! Form::open(['action' => ['TicketsController@addUser', $ticket->id], 'method' => 'POST']) !!}
-                                {{Form::hidden('ticket_id', $ticket->id)}}
-                                {{Form::hidden('_method', 'PUT')}}
-                                {{Form::submit('Claim ticket', ['class' => 'btn btn-primary'])}}
-                                {!! Form::close() !!} --}}
-
                                 <a class="btn btn-primary float-right" href="/tickets/claimTicket/{{$ticket->id}}">Claim ticket</a>
                             </div>  
                         </div>

@@ -15,7 +15,7 @@ class TicketsController extends Controller
     public function index()
     {
         //Get all the tickets
-        $tickets = Ticket::orderBy('created_at', 'asc')->paginate(5);
+        $tickets = Ticket::orderBy('created_at', 'asc')->where('status', 'todo')->paginate(5);
 
         //Return the tickets alongside the view
         return view ('tickets.index')->with('tickets', $tickets);
@@ -111,15 +111,35 @@ class TicketsController extends Controller
         return redirect('/tickets')->with('success', 'Ticket succesvol aangepast');
     }
 
-    public function addUser(Request $request, $id)
+    public function claimTicket(Request $request, $id)
     {
 
-        //Retrieve the ticket, request the user_id from the form and then save the ticket.
+        //Retrieve the ticket, request the user_id and then save the ticket.
         $ticket = Ticket::find($id);
         $ticket->user_id = auth()->user()->id;
+        $ticket->status = 'doing';
         $ticket->save();
 
-        return redirect('/tickets')->with('success', 'Ticket succesvol geclaimed.');
+        return redirect('/dashboard')->with('success', 'Ticket succesvol geclaimed.');
+    }
+
+    public function dropTicket(Request $request, $id)
+    {
+        $ticket = Ticket::find($id);
+        $ticket->user_id = NULL;
+        $ticket->status = 'todo';
+        $ticket->save();
+
+        return redirect('/dashboard')->with('success', 'Ticket succesvol gedumpt.');
+    }
+
+    public function markAsToReview (Request $request, $id)
+    {
+        $ticket = Ticket::find($id);
+        $ticket->status = 'toreview';
+        $ticket->save();
+
+        return redirect('/dashboard')->with('success', 'Het ticket is nu in afwachting op goedkeuring.');
     }
 
     /**

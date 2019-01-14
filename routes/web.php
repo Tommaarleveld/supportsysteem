@@ -19,7 +19,9 @@ Route::get('/about', 'PagesController@about');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('tickets/claimTicket/{id}', 'TicketsController@addUser');
+    Route::get('tickets/claimTicket/{id}', 'TicketsController@claimTicket');
+    Route::get('tickets/dropTicket/{id}', 'TicketsController@dropTicket');
+    Route::get('tickets/markAsToReview/{id}', 'TicketsController@markAsToReview');
     Route::resource('tickets', 'TicketsController');
   });
 
