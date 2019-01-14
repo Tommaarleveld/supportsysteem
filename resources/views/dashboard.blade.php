@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center mt-3">
-        <div class="col-md-10">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-12">
             <h1>Dashboard</h1>
             <div class="card">
                 <div class="card-body">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row justify-content-center mt-3">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <h3>To Review</h3>
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="row justify-content-center mt-3">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <h3>Done</h3>
