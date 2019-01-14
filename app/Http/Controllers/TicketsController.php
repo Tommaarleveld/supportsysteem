@@ -111,6 +111,17 @@ class TicketsController extends Controller
         return redirect('/tickets')->with('success', 'Ticket succesvol aangepast');
     }
 
+    public function addUser(Request $request, $id)
+    {
+
+        //Retrieve the ticket, request the user_id from the form and then save the ticket.
+        $ticket = Ticket::find($id);
+        $ticket->user_id = auth()->user()->id;
+        $ticket->save();
+
+        return redirect('/tickets')->with('success', 'Ticket succesvol geclaimed.');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

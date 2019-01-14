@@ -16,7 +16,15 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
 // Route to resources
-Route::resource('tickets', 'TicketsController');
 Auth::routes();
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('tickets/claimTicket/{id}', 'TicketsController@addUser');
+    Route::resource('tickets', 'TicketsController');
+  });
+
+
 Route::get('/dashboard', 'DashboardController@index');
+
+
+
