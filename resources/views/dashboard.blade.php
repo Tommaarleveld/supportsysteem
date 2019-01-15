@@ -18,9 +18,9 @@
                             </tr>
                     @foreach($tickets->where('status', 'doing') as $ticket)
                         <tr>
-                            <th><a href="/tickets/{{$ticket->id}}">{{$ticket->title}}</a></th>
-                            <th><a class="btn btn-outline-success float-right" href="/tickets/markAsToReview/{{$ticket->id}}">Afronden</a></th>
-                            <th><a class="btn btn-outline-danger float-right" href="/tickets/dropTicket/{{$ticket->id}}">Dump Ticket</a></th>
+                            <td class="align-middle"><a href="/tickets/{{$ticket->id}}">{{$ticket->title}}</a></td>
+                            <td><a class="btn btn-outline-success float-right" href="/tickets/markAsToReview/{{$ticket->id}}">Afronden</a></td>
+                            <td><a class="btn btn-outline-danger float-right" href="/tickets/dropTicket/{{$ticket->id}}">Dump Ticket</a></td>
                         </tr>
                     @endforeach
                     </table>
@@ -44,7 +44,7 @@
                             </tr>
                     @foreach($tickets->where('status', 'toreview') as $ticket)
                         <tr>
-                            <th><a href="/tickets/{{$ticket->id}}">{{$ticket->title}}</a></th>
+                            <td class="align-middle"><a href="/tickets/{{$ticket->id}}">{{$ticket->title}}</a></td>
                         </tr>
                     @endforeach
                     </table>

@@ -11,10 +11,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item {{request()->is('tickets') ? 'active' : ''}}">
-                    <a class="nav-link" href="/tickets">Tickets</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="/tickets/create">Maak een ticket aan</a>
+                    <a class="nav-link" href="/tickets">Openstaande Tickets</a>
                 </li>
             </ul>
 
@@ -48,6 +45,17 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
+                        </div>
+                    </li>
+                    {{-- Admin Part --}}
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <span class="text-info">Admin Panel </span><span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/tickets/create">Maak een ticket aan</a>
+                            <a class="dropdown-item" href="/admin/tickets">Ticket overzicht</a>
                         </div>
                     </li>
                 @endguest

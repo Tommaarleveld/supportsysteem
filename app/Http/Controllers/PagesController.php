@@ -18,4 +18,9 @@ class PagesController extends Controller
         $title = 'About';
         return view('pages.about')->with('title', $title);
     }
+
+    public function adminTickets(){
+        $title = 'Ticket overview';
+        return view('admin.tickets')->with('title', $title);
+    }
 }
