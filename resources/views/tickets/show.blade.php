@@ -14,12 +14,16 @@
                 <small>Aangemaakt op {{$ticket->created_at}}</small>
             </div>
             <div class="col-md-6 offset-md-2 clearfix">
-                {!!Form::open(['action' => ['TicketsController@destroy', $ticket->id], 'method' => 'POST', 'class' => 'float-right'])!!}
-                    {{Form::hidden('_method', 'DELETE')}}
-                    {{Form::submit('Verwijderen', ['class' => 'btn btn-outline-danger'])}}
-                {!!Form::close()!!}
-                <a href="/tickets/{{$ticket->id}}/edit" class="btn btn-outline-primary float-right mr-1">Edit</a>
-                <a class="btn btn-primary float-right mr-1" href="/tickets/claimTicket/{{$ticket->id}}">Claim ticket</a>
+                @if(Auth::user()->isAdmin == 1)
+                    {!!Form::open(['action' => ['TicketsController@destroy', $ticket->id], 'method' => 'POST', 'class' => 'float-right'])!!}
+                        {{Form::hidden('_method', 'DELETE')}}
+                        {{Form::submit('Verwijderen', ['class' => 'btn btn-outline-danger'])}}
+                    {!!Form::close()!!}
+                    <a href="/tickets/{{$ticket->id}}/edit" class="btn btn-outline-primary float-right mr-1">Edit</a>
+                @endif
+                @if($ticket->status == 'todo')
+                    <a class="btn btn-primary float-right mr-1" href="/tickets/claimTicket/{{$ticket->id}}">Claim ticket</a>
+                @endif    
             </div>
         </div>
     </div>

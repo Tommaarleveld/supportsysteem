@@ -48,6 +48,7 @@
                         </div>
                     </li>
                     {{-- Admin Part --}}
+                    @if(Auth::user()->isAdmin == 1)
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <span class="text-info">Admin Panel </span><span class="caret"></span>
@@ -58,7 +59,8 @@
                             <a class="dropdown-item" href="/admin/tickets">Ticket overzicht</a>
                         </div>
                     </li>
-                @endguest
+                    @endif
+                @endguest    
             </ul>
         </div>
     </div>

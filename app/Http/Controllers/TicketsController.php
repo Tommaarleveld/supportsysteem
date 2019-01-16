@@ -8,6 +8,16 @@ use App\Ticket;
 class TicketsController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -28,6 +38,10 @@ class TicketsController extends Controller
      */
     public function create()
     {
+        if(auth()->user()->isAdmin !== 1){
+            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets aanmaken.');
+        }
+
         return view('tickets.create');
     }
 
@@ -39,6 +53,10 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
+        if(auth()->user()->isAdmin !== 1){
+            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets aanmaken.');
+        }
+
         //Validate the fields
         $this->validate($request, [
             'title' => 'required',
@@ -80,6 +98,10 @@ class TicketsController extends Controller
      */
     public function edit($id)
     {
+        if(auth()->user()->isAdmin !== 1){
+            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets aanpassen.');
+        }
+
         $ticket = Ticket::find($id);
 
         return view('tickets.edit')->with('ticket', $ticket);
@@ -94,6 +116,10 @@ class TicketsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(auth()->user()->isAdmin !== 1){
+            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets aanpassen.');
+        }
+
         //Validate the fields
         $this->validate($request, [
             'title' => 'required',
@@ -113,7 +139,6 @@ class TicketsController extends Controller
 
     public function claimTicket(Request $request, $id)
     {
-
         //Retrieve the ticket, request the user_id and then save the ticket.
         $ticket = Ticket::find($id);
         $ticket->user_id = auth()->user()->id;
@@ -125,6 +150,11 @@ class TicketsController extends Controller
 
     public function dropTicket(Request $request, $id)
     {
+        // Check for correct user
+        if(auth()->user()->id !== $ticket->user_id){
+            return redirect('/tickets')->with('error', 'Alleen de gebruiker die dit ticket heeft geclaimed mag deze actie uitvoeren.');
+        }
+
         $ticket = Ticket::find($id);
         $ticket->user_id = NULL;
         $ticket->status = 'todo';
@@ -136,6 +166,12 @@ class TicketsController extends Controller
     public function markAsToReview (Request $request, $id)
     {
         $ticket = Ticket::find($id);
+        
+        // Check for correct user
+        if(auth()->user()->id !== $ticket->user_id){
+            return redirect('/tickets')->with('error', 'Alleen de gebruiker die dit ticket heeft geclaimed mag deze actie uitvoeren.');
+        }
+
         $ticket->status = 'toreview';
         $ticket->save();
 
@@ -150,6 +186,10 @@ class TicketsController extends Controller
      */
     public function destroy($id)
     {
+        if(auth()->user()->isAdmin !== 1){
+            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets verwijderen.');
+        }
+
         $ticket = ticket::find($id);
         $ticket->delete();
 

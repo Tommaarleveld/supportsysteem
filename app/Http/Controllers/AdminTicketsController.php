@@ -8,8 +8,22 @@ use App\User;
 
 class AdminTicketsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
+        if(auth()->user()->isAdmin !== 1){
+            return redirect('/tickets')->with('error', 'Alleen een admin mag het control panel beheren.');
+        }
+
         //Get all the tickets
         $ticketsDoing = Ticket::orderBy('created_at', 'asc')->where('status', 'doing')->paginate(5);
         $ticketsToReview = Ticket::orderBy('created_at', 'asc')->where('status', 'toreview')->paginate(5);
