@@ -142,6 +142,20 @@ class TicketsController extends Controller
     {
         //Retrieve the ticket, request the user_id and then save the ticket.
         $ticket = Ticket::find($id);
+
+        //If ticket level is medium and the user points is lower then 10 redirect with error message
+        if($ticket->level == 'medium' && auth()->user()->points < 20){
+            return redirect('/tickets')->with('error', 'Je hebt niet voldoende tickets afgerond om een ticket met het level "MEDIUM" te claimen. Ga eerst met tickets aan de slag met het level "EASY".');
+        }
+        //If ticket level is hard and the user points is lower then 20 redirect with error message
+        else if($ticket->level == 'hard' && auth()->user()->points < 20){
+            return redirect('/tickets')->with('error', 'Je hebt niet voldoende tickets afgerond om een ticket met het level "HARD" te claimen. Ga eerst met tickets aan de slag met het level "EASY" Of "MEDIUM".');
+        }
+        //If ticket level is expert and the user points is lower then 30 redirect with error message
+        else if($ticket->level == 'expert' && auth()->user()->points < 30){
+            return redirect('/tickets')->with('error', 'Je hebt niet voldoende tickets afgerond om een ticket met het level "EXPERT" te claimen. Ga eerst met tickets aan de slag met het level "EASY", "MEDIUM" of "HARD".');
+        }
+
         $ticket->user_id = auth()->user()->id;
         $ticket->status = 'doing';
         $ticket->save();
@@ -151,12 +165,14 @@ class TicketsController extends Controller
 
     public function dropTicket(Request $request, $id)
     {
-        // Check for correct user
-        if(auth()->user()->id !== $ticket->user_id){
-            return redirect('/tickets')->with('error', 'Alleen de gebruiker die dit ticket heeft geclaimed mag deze actie uitvoeren.');
-        }
 
         $ticket = Ticket::find($id);
+
+        // Check for correct user
+        if(auth()->user()->id !== $ticket->user_id){
+             return redirect('/tickets')->with('error', 'Alleen de gebruiker die dit ticket heeft geclaimed mag deze actie uitvoeren.');
+        }
+
         $ticket->user_id = NULL;
         $ticket->status = 'todo';
         $ticket->save();

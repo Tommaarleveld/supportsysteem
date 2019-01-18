@@ -24,7 +24,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="row">
-                                    <div class="col-md-12">Level</div>
+                                    <div class="col-md-12">Level:</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">

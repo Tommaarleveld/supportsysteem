@@ -61,6 +61,20 @@
                 <div class="card-body">
                     <h3>Done</h3>
                     <p class="infotext">Onderstaande tickets zijn met succes door jou volbracht.</p>
+                    @if (count($tickets->where('status', 'done')) > 0)
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Titel</th>
+                            </tr>
+                        @foreach($tickets->where('status', 'done') as $ticket)
+                            <tr>
+                                <td class="align-middle"><a href="/tickets/{{$ticket->id}}">{{$ticket->title}}</a></td>
+                            </tr>
+                        @endforeach
+                        </table>
+                    @else
+                        <p>Je hebt op dit moment geen tickets die zijn goedgekeurd.</p>
+                    @endif
                 </div>
             </div>
         </div>

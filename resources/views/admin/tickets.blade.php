@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-md-12">
-            <h1>Ticket Status Panel</h1>
+            <h1>Admin Panel</h1>
             <div class="card">
                 <div class="card-body">
                     <h3>Doing</h3>
@@ -15,7 +15,7 @@
                                 <div class="card-body">
                                     <div class="container">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-5">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <h5><a class="card-title align-middle" href="/tickets/{{$ticketDoing->id}}">{{$ticketDoing->title}}</a></h5>
@@ -26,6 +26,16 @@
                                                             <small>Wordt uitgevoerd door: <span class="text-dark font-weight-bold">{{$ticketDoing->userName}}</span></small>
                                                         </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-12">Level:</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                        <p class="text-uppercase font-weight-bold">{{$ticketDoing->level}}</p>
+                                                        </div>
+                                                    </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <a class="btn btn-outline-danger float-right" href="/tickets/dropTicket/{{$ticketDoing->id}}">Dump Ticket</a>
@@ -57,16 +67,26 @@
                                 <div class="card-body">
                                     <div class="container">
                                             <div class="row">
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-5">
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <h5><a class="card-title align-middle" href="/tickets/{{$ticketToReview->id}}">{{$ticketToReview->title}}</a></h5>
                                                             </div>
                                                         </div>
                                                         <div class="row">
+                                                            <div class="col-md-12">
+                                                                <small>Wordt uitgevoerd door: <span class="text-dark font-weight-bold">{{$ticketToReview->userName}}</span></small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="row">
+                                                            <div class="col-md-12">Level:</div>
+                                                            </div>
+                                                            <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <small>Wordt uitgevoerd door: <span class="text-dark font-weight-bold">{{$ticketToReview->userName}}</span></small>
-                                                                </div>
+                                                                <p class="text-uppercase font-weight-bold">{{$ticketToReview->level}}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -99,7 +119,7 @@
                                 <div class="card-body">
                                     <div class="container">
                                             <div class="row">
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-5">
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <h5><a class="card-title align-middle" href="/tickets/{{$ticketDone->id}}">{{$ticketDone->title}}</a></h5>
@@ -109,6 +129,16 @@
                                                                 <div class="col-md-12">
                                                                     <small>Ticket is uitgevoerd door: <span class="text-dark font-weight-bold">{{$ticketDone->userName}}</span></small>
                                                                 </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="row">
+                                                                <div class="col-md-12">Level:</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                            <p class="text-uppercase font-weight-bold">{{$ticketDone->level}}</p>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
