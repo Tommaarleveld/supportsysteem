@@ -50,5 +50,24 @@ class AdminTicketsController extends Controller
         //Return the tickets alongside the view
         return view ('admin.tickets', compact('ticketsDoing', 'ticketsToReview', 'ticketsDone'));
     }
+
+    public function markAsDone (Request $request, $id)
+    {
+        // Check for correct user
+        if(auth()->user()->isAdmin !== 1){
+            return redirect('/')->with('error', 'Alleen een admin mag tickets goedkeuren.');
+        }
+
+        $ticket = Ticket::find($id);
+        $ticket->status = 'done';
+        $ticket->save();
+
+        //Add a point to user where ticket->user_id is the same as user->id
+        $user = User::find($ticket->user_id);
+        $user->points = +1;
+        $user->save();
+
+        return redirect('/admin/tickets')->with('success', 'Het ticket is nu goedgekeurd en afgehandeld.');
+    }
     
 }

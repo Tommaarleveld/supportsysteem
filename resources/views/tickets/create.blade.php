@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             {{Form::label('level', 'Moeilijkheidsgraad')}}
-            {{Form::select('level', ['easy' => 'Makkelijk', 'medium' => 'Gemiddeld', 'hard' => 'Moeilijk', 'expert' => 'Expert'], 'easy', ['class' => 'form-control'])}}
+            {{Form::select('level', ['easy' => 'Easy', 'medium' => 'Medium', 'hard' => 'Hard', 'expert' => 'Expert'], 'easy', ['class' => 'form-control'])}}
         </div>
         {{Form::submit('Toevoegen', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}

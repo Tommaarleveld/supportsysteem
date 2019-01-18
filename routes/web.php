@@ -23,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tickets/claimTicket/{id}', 'TicketsController@claimTicket');
     Route::get('tickets/dropTicket/{id}', 'TicketsController@dropTicket');
     Route::get('tickets/markAsToReview/{id}', 'TicketsController@markAsToReview');
+    Route::get('tickets/markAsDone/{id}', 'AdminTicketsController@markAsDone');
     Route::resource('tickets', 'TicketsController');
     Route::get('admin/tickets', 'AdminTicketsController@index');
   });

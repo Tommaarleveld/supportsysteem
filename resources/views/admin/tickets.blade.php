@@ -70,7 +70,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <a class="btn btn-outline-success float-right" href="#">Goedkeuren</a>
+                                                        <a class="btn btn-outline-success float-right" href="/tickets/markAsDone/{{$ticketToReview->id}}">Goedkeuren</a>
                                                     </div>  
                                             </div>
                                     </div>
@@ -92,7 +92,44 @@
             <div class="card">
                 <div class="card-body">
                     <h3>Done</h3>
-                    <p class="infotext">Onderstaande tickets zijn met succes door jou volbracht.</p>
+                    <p class="infotext">Onderstaande tickets zijn met succes volbracht.</p>
+                    @if (count($ticketsDone) > 0)
+                        @foreach($ticketsDone as $ticketDone)
+                            <div class="card bg-light mt-1">
+                                <div class="card-body">
+                                    <div class="container">
+                                            <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5><a class="card-title align-middle" href="/tickets/{{$ticketDone->id}}">{{$ticketDone->title}}</a></h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <small>Ticket is uitgevoerd door: <span class="text-dark font-weight-bold">{{$ticketDone->userName}}</span></small>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @if(Auth::user()->isAdmin == 1)
+                                                        {!!Form::open(['action' => ['TicketsController@destroy', $ticketDone->id], 'method' => 'POST', 'class' => 'float-right'])!!}
+                                                            {{Form::hidden('_method', 'DELETE')}}
+                                                            {{Form::submit('Verwijderen', ['class' => 'btn btn-outline-danger'])}}
+                                                        {!!Form::close()!!}
+                                                        @endif
+                                                    </div>  
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="mt-2">
+                            {{$ticketsDone->links()}}
+                        </div>
+                    @else
+                    <p>Er zijn op dit moment geen tickets met de status "Done".</p>
+                    @endif
                 </div>
             </div>
         </div>
