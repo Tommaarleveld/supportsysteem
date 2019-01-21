@@ -23,10 +23,18 @@ class TicketsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //Get all the tickets
-        $tickets = Ticket::orderBy('created_at', 'asc')->where('status', 'todo')->paginate(5);
+    public function index(Request $request)
+    {  
+       if($request->has('level')){
+            $tickets = Ticket::orderBy('created_at', 'asc')->where('status', 'todo')->where('level', $request->get('level'))->paginate(5);
+        }
+        else if($request->has('search')){
+            $tickets = Ticket::orderBy('created_at', 'asc')->where('status', 'todo')->where('title','LIKE', '%'. $request->get('search') .'%')->orWhere('level','LIKE', '%'. $request->get('search') .'%')->paginate(5);
+        }
+        else{
+            //Get all the tickets
+            $tickets = Ticket::orderBy('created_at', 'asc')->where('status', 'todo')->paginate(5);
+        }
 
         //Return the tickets alongside the view
         return view ('tickets.index')->with('tickets', $tickets);
