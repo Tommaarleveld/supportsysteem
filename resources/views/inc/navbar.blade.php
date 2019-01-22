@@ -34,6 +34,17 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            @if(Auth::user()->points < 10)
+                            <p class="dropdown-item">Rookie ({{ Auth::user()->points }})</p>
+                            @elseif(Auth::user()->points >= 10 && Auth::user()->points < 20)
+                            <a class="dropdown-item">Semi-pro ({{ Auth::user()->points }})</a>
+                            @elseif(Auth::user()->whereBetween('points', [20, 30]))
+                            <a class="dropdown-item">Pro ({{ Auth::user()->points }})</a>
+                            @elseif(Auth::user()->points >= 30)
+                            <a class="dropdown-item">Expert ({{ Auth::user()->points }})</a>
+                            @endif
+                            <div class="dropdown-divider"></div>
+
                             <a class="dropdown-item" href="/dashboard">Dashboard</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"

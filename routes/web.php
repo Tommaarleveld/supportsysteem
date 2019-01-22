@@ -12,7 +12,7 @@
 */
 
 // Route to pages
-Route::get('/', 'PagesController@index');
+Route::get('/', 'TicketsController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/admin/tickets', 'PagesController@adminTickets');
 

@@ -63,9 +63,7 @@ class AdminTicketsController extends Controller
         $ticket->save();
 
         //Add a point to user where ticket->user_id is the same as user->id
-        $user = User::find($ticket->user_id);
-        $user->points = +1;
-        $user->save();
+        User::find($ticket->user_id)->increment('points', 1);
 
         return redirect('/admin/tickets')->with('success', 'Het ticket is nu goedgekeurd en afgehandeld.');
     }

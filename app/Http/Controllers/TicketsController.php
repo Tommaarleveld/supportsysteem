@@ -151,17 +151,21 @@ class TicketsController extends Controller
         //Retrieve the ticket, request the user_id and then save the ticket.
         $ticket = Ticket::find($id);
 
+        $mediumDifference = 10 - auth()->user()->points;
+        $hardDifference = 20 - auth()->user()->points;
+        $expertDifference = 30 - auth()->user()->points;
+
         //If ticket level is medium and the user points is lower then 10 redirect with error message
-        if($ticket->level == 'medium' && auth()->user()->points < 20){
-            return redirect('/tickets')->with('error', 'Je hebt niet voldoende tickets afgerond om een ticket met het level "MEDIUM" te claimen. Ga eerst met tickets aan de slag met het level "EASY".');
+        if($ticket->level == 'medium' && auth()->user()->points < 10){
+            return redirect('/tickets')->with('error', 'Om tickets met het level "MEDIUM" te claimen heb je minimaal 10 punten nodig. Je moet nog '. $mediumDifference .' punten behalen om MEDIUM tickets te kunnen claimen.');
         }
         //If ticket level is hard and the user points is lower then 20 redirect with error message
         else if($ticket->level == 'hard' && auth()->user()->points < 20){
-            return redirect('/tickets')->with('error', 'Je hebt niet voldoende tickets afgerond om een ticket met het level "HARD" te claimen. Ga eerst met tickets aan de slag met het level "EASY" Of "MEDIUM".');
+            return redirect('/tickets')->with('error', 'Om tickets met het level "HARD" te claimen heb je minimaal 20 punten nodig. Je moet nog '. $hardDifference .' punten behalen om HARD tickets te kunnen claimen.');
         }
         //If ticket level is expert and the user points is lower then 30 redirect with error message
         else if($ticket->level == 'expert' && auth()->user()->points < 30){
-            return redirect('/tickets')->with('error', 'Je hebt niet voldoende tickets afgerond om een ticket met het level "EXPERT" te claimen. Ga eerst met tickets aan de slag met het level "EASY", "MEDIUM" of "HARD".');
+            return redirect('/tickets')->with('error', 'Om tickets met het level "EXPERT" te claimen heb je minimaal 30 punten nodig. Je moet nog '. $expertDifference .' punten behalen om EXPERT tickets te kunnen claimen.');
         }
 
         $ticket->user_id = auth()->user()->id;
@@ -177,15 +181,17 @@ class TicketsController extends Controller
         $ticket = Ticket::find($id);
 
         // Check for correct user
-        if(auth()->user()->id !== $ticket->user_id){
-             return redirect('/tickets')->with('error', 'Alleen de gebruiker die dit ticket heeft geclaimed mag deze actie uitvoeren.');
+        if(auth()->user()->id == $ticket->user_id || auth()->user()->isAdmin == 1){
+            $ticket->user_id = NULL;
+            $ticket->status = 'todo';
+            $ticket->save();
+    
+            return redirect('/tickets')->with('success', 'Ticket succesvol gedumpt.');
+        }
+        else{
+            return redirect('/tickets')->with('error', 'Alleen de gebruiker die dit ticket heeft geclaimed of een admin mag deze actie uitvoeren.');
         }
 
-        $ticket->user_id = NULL;
-        $ticket->status = 'todo';
-        $ticket->save();
-
-        return redirect('/dashboard')->with('success', 'Ticket succesvol gedumpt.');
     }
 
     public function markAsToReview (Request $request, $id)
