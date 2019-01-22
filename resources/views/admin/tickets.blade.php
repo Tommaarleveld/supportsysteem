@@ -90,7 +90,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <a class="btn btn-outline-success float-right" href="/tickets/markAsDone/{{$ticketToReview->id}}">Goedkeuren</a>
+                                                        <a class="btn btn-outline-danger float-right" href="/tickets/dissaproveTicket/{{$ticketToReview->id}}">Afkeuren</a>
+                                                        <a class="btn btn-outline-success float-right mr-1" href="/tickets/markAsDone/{{$ticketToReview->id}}">Goedkeuren</a>
                                                     </div>  
                                             </div>
                                     </div>

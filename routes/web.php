@@ -13,8 +13,6 @@
 
 // Route to pages
 Route::get('/', 'TicketsController@index');
-Route::get('/about', 'PagesController@about');
-Route::get('/admin/tickets', 'PagesController@adminTickets');
 
 // Route to resources
 Auth::routes();
@@ -24,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tickets/dropTicket/{id}', 'TicketsController@dropTicket');
     Route::get('tickets/markAsToReview/{id}', 'TicketsController@markAsToReview');
     Route::get('tickets/markAsDone/{id}', 'AdminTicketsController@markAsDone');
+    Route::get('tickets/dissaproveTicket/{id}', 'AdminTicketsController@dissaproveTicket');
     Route::resource('tickets', 'TicketsController');
     Route::get('admin/tickets', 'AdminTicketsController@index');
   });

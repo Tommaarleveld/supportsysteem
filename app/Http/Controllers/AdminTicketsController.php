@@ -68,4 +68,20 @@ class AdminTicketsController extends Controller
         return redirect('/admin/tickets')->with('success', 'Het ticket is nu goedgekeurd en afgehandeld.');
     }
     
+    public function dissaproveTicket(Request $request, $id)
+    {
+
+        $ticket = Ticket::find($id);
+
+        // Check if current user is the admin otherwise give errormessage
+        if(auth()->user()->isAdmin == 1){
+            $ticket->status = 'doing';
+            $ticket->save();
+    
+            return redirect('/admin/tickets')->with('success', 'Ticket succesvol afgekeurd.');
+        }
+        else{
+            return redirect('/tickets')->with('error', 'Alleen een admin mag een ticket afkeuren.');
+        }
+    }
 }
