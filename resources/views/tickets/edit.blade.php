@@ -19,7 +19,7 @@
             {{Form::label('level', 'Moeilijkheidsgraad')}}
             {{Form::select('level', ['easy' => 'Easy', 'medium' => 'Medium', 'hard' => 'Hard', 'expert' => 'Expert'], $ticket->level, ['class' => 'form-control'])}}
         </div>
-        {{Form::hidden('_method', 'PUT')}}
+        {{Form::hidden('_method', 'PATCH')}}
         {{Form::submit('Aanpassen', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}
 @endsection

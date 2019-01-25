@@ -24,6 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tickets/markAsDone/{id}', 'AdminTicketsController@markAsDone');
     Route::get('tickets/dissaproveTicket/{id}', 'AdminTicketsController@dissaproveTicket');
     Route::resource('tickets', 'TicketsController');
+    Route::get('users/{id}/edit', 'UsersController@edit');
+    Route::put('users/{id}/update', 'UsersController@update');
     Route::get('admin/tickets', 'AdminTicketsController@index');
   });
 

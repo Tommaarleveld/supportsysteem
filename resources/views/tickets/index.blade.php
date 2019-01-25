@@ -3,15 +3,34 @@
 
 {{-- Contect section --}}
 @section('content')
-    <h1 class="mt-5">Tickets</h1>
-    <a href="/tickets?level=easy">Easy</a>
-    <a href="/tickets?level=medium">Medium</a>
-    <a href="/tickets?level=hard">Hard</a>
-    <a href="/tickets?level=expert">Expert</a>
-    {!!Form::open(['action' => ['TicketsController@index'], 'method' => 'GET', 'class' => ''])!!}
-        {{Form::text('search')}}
-        {{Form::submit('Zoeken', ['class' => 'btn btn-outline-primary'])}}
-    {!!Form::close()!!}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            <h1>Tickets</h1>
+        </div>
+        <div class="col-md-3">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/tickets?level=easy">Easy</a>
+                    <a class="dropdown-item" href="/tickets?level=medium">Medium</a>
+                    <a class="dropdown-item" href="/tickets?level=hard">Hard</a>
+                    <a class="dropdown-item" href="/tickets?level=expert">Expert</a>
+                <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/tickets">All</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" align="right">
+            {!!Form::open(['action' => ['TicketsController@index'], 'method' => 'GET', 'class' => ''])!!}
+                {{Form::text('search')}}
+                {{Form::submit('Zoeken', ['class' => 'btn btn-primary'])}}
+            {!!Form::close()!!}
+        </div>
+    </div>
+</div>
     @if (count($tickets) > 0)
         @foreach($tickets as $ticket)
             <div class="card">
