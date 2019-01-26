@@ -47,10 +47,6 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->isAdmin !== 1){
-            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets aanmaken.');
-        }
-
         return view('tickets.create');
     }
 
@@ -62,10 +58,6 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        if(auth()->user()->isAdmin !== 1){
-            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets aanmaken.');
-        }
-
         //Validate the fields
         $this->validate($request, [
             'title' => 'required',
@@ -107,12 +99,7 @@ class TicketsController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->isAdmin !== 1){
-            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets aanpassen.');
-        }
-
         $ticket = Ticket::find($id);
-
         return view('tickets.edit')->with('ticket', $ticket);
     }
 
@@ -125,10 +112,6 @@ class TicketsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(auth()->user()->isAdmin !== 1){
-            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets aanpassen.');
-        }
-
         //Validate the fields
         $this->validate($request, [
             'title' => 'required',
@@ -143,7 +126,7 @@ class TicketsController extends Controller
         $ticket->level = $request->input('level');
         $ticket->save();
 
-        return redirect('/tickets')->with('success', 'Ticket succesvol aangepast');
+        return back()->with('success', 'Ticket succesvol aangepast');
     }
 
     public function claimTicket(Request $request, $id)
@@ -217,10 +200,6 @@ class TicketsController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->isAdmin !== 1){
-            return redirect('/tickets')->with('error', 'Alleen een admin mag tickets verwijderen.');
-        }
-
         $ticket = ticket::find($id);
         $ticket->delete();
 

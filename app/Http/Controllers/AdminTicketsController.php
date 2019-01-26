@@ -20,10 +20,6 @@ class AdminTicketsController extends Controller
 
     public function index()
     {
-        if(auth()->user()->isAdmin !== 1){
-            return redirect('/tickets')->with('error', 'Alleen een admin mag het control panel beheren.');
-        }
-
         //Get all the tickets
         $ticketsDoing = Ticket::orderBy('created_at', 'asc')->where('status', 'doing')->paginate(5);
         $ticketsToReview = Ticket::orderBy('created_at', 'asc')->where('status', 'toreview')->paginate(5);
@@ -53,11 +49,6 @@ class AdminTicketsController extends Controller
 
     public function markAsDone (Request $request, $id)
     {
-        // Check for correct user
-        if(auth()->user()->isAdmin !== 1){
-            return redirect('/')->with('error', 'Alleen een admin mag tickets goedkeuren.');
-        }
-
         $ticket = Ticket::find($id);
         $ticket->status = 'done';
         $ticket->save();
@@ -74,14 +65,11 @@ class AdminTicketsController extends Controller
         $ticket = Ticket::find($id);
 
         // Check if current user is the admin otherwise give errormessage
-        if(auth()->user()->isAdmin == 1){
-            $ticket->status = 'doing';
-            $ticket->save();
+  
+        $ticket->status = 'doing';
+        $ticket->save();
     
-            return redirect('/admin/tickets')->with('success', 'Ticket succesvol afgekeurd.');
-        }
-        else{
-            return redirect('/tickets')->with('error', 'Alleen een admin mag een ticket afkeuren.');
-        }
+        return redirect('/admin/tickets')->with('success', 'Ticket succesvol afgekeurd.');
+        
     }
 }
